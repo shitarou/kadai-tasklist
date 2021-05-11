@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
 import utils.DBUtil;
+
+
 @WebServlet("/show")
 public class ShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -23,19 +25,17 @@ public class ShowServlet extends HttpServlet {
     }
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
-
 
         Task t = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 
-
-        request.setAttribute("Task", t);
+        request.setAttribute("task", t);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");
         rd.forward(request, response);
     }
-
 }
